@@ -18,8 +18,9 @@ jobs:
           xcodebuild -project liquidglassphotoframe.xcodeproj \
             -scheme liquidglassphotoframe \
             -configuration Release \
-            -destination 'platform=macOS,variant=Mac Catalyst,arch=arm64' \
+            -destination 'platform=macOS,variant=Mac Catalyst,name=Any Mac' \
             -derivedDataPath DerivedData \
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
             build
 
       - name: Find and verify .app
