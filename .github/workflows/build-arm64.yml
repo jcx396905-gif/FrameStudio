@@ -1,0 +1,44 @@
+name: Build macOS arm64
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release tag to upload to'
+        required: true
+
+jobs:
+  build-arm64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build arm64 Catalyst
+        run: |
+          xcodebuild -project liquidglassphotoframe.xcodeproj \
+            -scheme liquidglassphotoframe \
+            -configuration Release \
+            -destination 'platform=macOS,variant=Mac Catalyst,arch=arm64' \
+            -derivedDataPath DerivedData \
+            build
+
+      - name: Find and verify .app
+        run: |
+          APP=$(find DerivedData -name "*.app" -path "*/Release*" -type d | head -1)
+          echo "APP=$APP" >> $GITHUB_ENV
+          echo "Found: $APP"
+          file "$APP/Contents/MacOS/"*
+
+      - name: Create DMG
+        run: |
+          hdiutil create -volname "Frame Studio" \
+            -srcfolder "${{ env.APP }}" \
+            -ov -format UDZO \
+            FrameStudio-macOS-arm64.dmg
+          ls -lh FrameStudio-macOS-arm64.dmg
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.release_tag }}
+          files: FrameStudio-macOS-arm64.dmg
