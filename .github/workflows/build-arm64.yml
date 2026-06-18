@@ -15,12 +15,14 @@ jobs:
 
       - name: Build arm64 Catalyst
         run: |
+          # Build Catalyst arm64 using generic platform destination (avoids local Mac version check)
           xcodebuild -project liquidglassphotoframe.xcodeproj \
             -scheme liquidglassphotoframe \
             -configuration Release \
-            -destination 'platform=macOS,variant=Mac Catalyst,name=Any Mac' \
+            -destination 'generic/platform=macOS,variant=Mac Catalyst' \
+            -arch arm64 \
             -derivedDataPath DerivedData \
-            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
+            ONLY_ACTIVE_ARCH=NO \
             build
 
       - name: Find and verify .app
