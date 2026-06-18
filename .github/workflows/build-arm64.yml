@@ -20,7 +20,6 @@ jobs:
             -scheme liquidglassphotoframe \
             -configuration Release \
             -destination 'generic/platform=macOS,variant=Mac Catalyst' \
-            -arch arm64 \
             -derivedDataPath DerivedData \
             ONLY_ACTIVE_ARCH=NO \
             build
