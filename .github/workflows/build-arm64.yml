@@ -22,6 +22,9 @@ jobs:
             -destination 'generic/platform=macOS,variant=Mac Catalyst' \
             -derivedDataPath DerivedData \
             ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
             build
 
       - name: Find and verify .app
