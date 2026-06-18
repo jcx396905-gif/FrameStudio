@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "olympus.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
